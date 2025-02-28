@@ -4,7 +4,7 @@ const validator = require('validator')
 const {validateSignUp} = require('../utils/validate')
 const {User} = require('../models/User')
 const cookieParser = require('cookie-parser')
-
+const {Order} = require('../models/Order')
 
 const authRouter = express.Router()
 authRouter.use(express.json())
@@ -38,7 +38,7 @@ authRouter.post('/login',async (req,res)=>{
               }else if(user.role === "institute"){
                res.redirect('/institute/dashboard')
               }else if(user.role === "shopkeeper"){
-               res.redirect('/shopkeeper')
+               res.redirect('/shopkeeper/dashboard')
                 }
         }else{
             res.send("Wrong Creds")
@@ -75,6 +75,25 @@ authRouter.get("/logout",(req,res)=>{
     })
     res.redirect('/auth/login')
 })
+
+authRouter.get('/admin', async (req, res) => {
+    try {
+        const orders = await Order.find()
+            .populate('donorId', 'name email') // Donor details
+            .populate('shopkeeperId', 'name email') // Assigned shopkeeper details
+            .populate('instituteId', 'name email') // Institute details
+            .populate({
+                path: 'items',
+                select: 'itemName quantity unit'
+            });
+
+        res.render('adminDashboard', { orders }); // Render the admin dashboard page with orders data
+    } catch (err) {
+        console.error("Error fetching assigned requests:", err);
+        res.status(500).json({ message: "Server error" });
+    }
+});
+
 
 module.exports = {
     authRouter

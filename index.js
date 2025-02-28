@@ -3,6 +3,7 @@ const cookieParser = require('cookie-parser')
 const {authRouter} = require('./routes/auth')
 const {instituteRouter} = require('./routes/institute')
 const {donorRouter} = require('./routes/donor')
+const {shopkeeperRouter} = require('./routes/shopkeeper')
 const mongoose = require('mongoose')
 const path = require("path");
 const app = express()
@@ -18,6 +19,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/auth",authRouter)
 app.use("/institute",instituteRouter)
 app.use("/donor",donorRouter)
+app.use("/shopkeeper",shopkeeperRouter)
 // Landing Route
 app.get("/", (req, res) => {
     res.render("landing");
