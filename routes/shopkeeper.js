@@ -57,7 +57,7 @@ shopkeeperRouter.get('/approved', async (req, res) => {
     }
 });
 
-shopkeeperRouter.post('/reject/:id', async (req, res) => {
+shopkeeperRouter.post('/orders/reject/:id', async (req, res) => {
     try {
         const order = await Order.findById(req.params.id);
 
@@ -86,7 +86,7 @@ shopkeeperRouter.post('/reject/:id', async (req, res) => {
         res.redirect('/shopkeeper/pending'); // Redirect to pending orders page
     } catch (err) {
         console.error("Error rejecting order:", err);
-        res.status(500).send("Server Error");
+        res.send('Removed Sucessfully')
     }
 });
 

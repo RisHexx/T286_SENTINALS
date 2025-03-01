@@ -78,8 +78,8 @@ donorRouter.post("/donate/request/:id", userAuth, async (req, res) => {
         }
 
         const randomShopkeeper = shopkeepers[Math.floor(Math.random() * shopkeepers.length)];
-        console.log("Random Shopkeeper:", randomShopkeeper);
-        console.log("Donation Request:", donationRequest.items);
+        // console.log("Random Shopkeeper:", randomShopkeeper);
+        // console.log("Donation Request:", donationRequest.items);
 
 
         const newOrder = new Order({
